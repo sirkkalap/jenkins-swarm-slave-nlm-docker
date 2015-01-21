@@ -1,7 +1,7 @@
 jenkins-swarm-slave-nlm-docker
 ==============================
 
-Jenkins Swarmer slave with nodejs, Leiningen, Maven and Firefox
+Jenkins Swarmer slave with nodejs, Leiningen, Maven, Xvfb and Firefox
 
 # Running
 
