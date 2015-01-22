@@ -1,4 +1,4 @@
-FROM sirkkalap/jenkins-swarm-slave-w-lein
+FROM sirkkalap/jenkins-swarm-slave-w-lein:java7
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
