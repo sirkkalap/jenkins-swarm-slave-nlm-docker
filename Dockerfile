@@ -28,6 +28,9 @@ RUN apt-get -y install maven
 # Xvfb
 RUN apt-get -y install Xvfb
 
+# x11vnc for remote debugging
+RUN apt-get -y install x11vnc
+
 # Firefox
 RUN echo "deb http://packages.linuxmint.com debian import" >>/etc/apt/sources.list
 RUN curl -sL http://packages.linuxmint.com/pool/main/l/linuxmint-keyring/linuxmint-keyring_2009.04.29_all.deb >linuxmint-keyring.deb
