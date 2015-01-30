@@ -1,4 +1,4 @@
-FROM sirkkalap/jenkins-swarm-slave-w-lein
+FROM sirkkalap/jenkins-swarm-slave-w-lein:java7
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
@@ -27,6 +27,9 @@ RUN apt-get -y install maven
 
 # Xvfb
 RUN apt-get -y install Xvfb
+
+# x11vnc for remote debugging
+RUN apt-get -y install x11vnc
 
 # Firefox
 RUN echo "deb http://packages.linuxmint.com debian import" >>/etc/apt/sources.list
