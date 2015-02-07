@@ -21,6 +21,7 @@ RUN \
     git \
     google-chrome-stable \
     maven \
+    node \
     npm \
     x11vnc \
     Xvfb && \
