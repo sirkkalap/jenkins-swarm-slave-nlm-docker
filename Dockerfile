@@ -55,7 +55,7 @@ RUN npm install -g bower@1.3.12
 RUN npm install -g grunt-cli@0.1.13
 
 # # Allow write for npm install -g
-RUN chmod o+w -R /usr/lib/node_modules
+RUN chmod o+w -R /usr/local/lib/node_modules
 
 ENV JENKINS_SWARM_VERSION 1.22
 ENV HOME /home/jenkins-slave
