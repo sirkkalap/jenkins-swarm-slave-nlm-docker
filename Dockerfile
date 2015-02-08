@@ -1,4 +1,4 @@
-FROM sirkkalap/jenkins-swarm-slave-w-lein:java7
+FROM java:7
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
@@ -21,14 +21,32 @@ RUN \
     git \
     google-chrome-stable \
     maven \
-    node \
-    npm \
     x11vnc \
     Xvfb && \
   rm -rf /var/lib/apt/lists/* # 2015-02-07
 
-# Update NPM
-RUN npm install -g npm@2.5.0
+# Leiningen
+ENV LEIN_ROOT 1
+RUN curl -L -s https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > \
+    /usr/local/bin/lein \
+ && chmod 0755 /usr/local/bin/lein \
+ && lein upgrade
+
+# Node
+# Install Node.js
+RUN \
+  cd /tmp && \
+  wget http://nodejs.org/dist/node-latest.tar.gz && \
+  tar xvzf node-latest.tar.gz && \
+  rm -f node-latest.tar.gz && \
+  cd node-v* && \
+  ./configure && \
+  CXX="g++ -Wno-unused-local-typedefs" make && \
+  CXX="g++ -Wno-unused-local-typedefs" make install && \
+  cd /tmp && \
+  rm -rf /tmp/node-v* && \
+  npm install -g npm@2.5.0 && \
+  echo -e '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
 
 # Bower
 RUN npm install -g bower@1.3.12
@@ -36,8 +54,20 @@ RUN npm install -g bower@1.3.12
 # Grunt
 RUN npm install -g grunt-cli@0.1.13
 
-# Allow write for npm install -g
+# # Allow write for npm install -g
 RUN chmod o+w -R /usr/lib/node_modules
 
+ENV JENKINS_SWARM_VERSION 1.22
+ENV HOME /home/jenkins-slave
+
+RUN useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave
+RUN curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
+  && chmod 755 /usr/share/jenkins
+
+COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
+
 USER jenkins-slave
-WORKDIR /home/jenkins-slave
+
+VOLUME /home/jenkins-slave
+
+ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
