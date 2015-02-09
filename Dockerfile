@@ -54,8 +54,8 @@ RUN npm install -g bower@1.3.12
 # Grunt
 RUN npm install -g grunt-cli@0.1.13
 
-# # Allow write for npm install -g
-RUN chmod o+w -R /usr/local/lib/node_modules
+# # Allow write for npm installs -g
+RUN chmod o+w -R /usr/local
 
 ENV JENKINS_SWARM_VERSION 1.22
 ENV HOME /home/jenkins-slave
@@ -65,9 +65,12 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERS
   && chmod 755 /usr/share/jenkins
 
 COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
+COPY bowerrc /home/jenkins-slave/.bowerrc
 
 USER jenkins-slave
 
 VOLUME /home/jenkins-slave
+
+WORKDIR /home/jenkins-slave
 
 ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
