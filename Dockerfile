@@ -33,7 +33,7 @@ RUN curl -L -s https://raw.githubusercontent.com/technomancy/leiningen/stable/bi
  && lein upgrade
 
 # Node
-# Install Node.js
+# Install Node.js, Bower, Grunt, Gulp
 RUN \
   cd /tmp && \
   wget http://nodejs.org/dist/node-latest.tar.gz && \
@@ -46,28 +46,26 @@ RUN \
   cd /tmp && \
   rm -rf /tmp/node-v* && \
   npm install -g npm@2.5.0 && \
-  echo -e '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
-
-# Bower
-RUN npm install -g bower@1.3.12
-
-# Grunt
-RUN npm install -g grunt-cli@0.1.13
-
-# # Allow write for npm installs -g
-RUN chmod o+w -R /usr/local
+  npm install -g bower@1.3.12 && \
+  npm install -g grunt-cli@0.1.13 && \
+  npm install -g gulp@3.8.11 && \
+  echo 'export PATH="node_modules/.bin:$PATH"' >> /root/.bashrc && \
+  echo 'export PATH="node_modules/.bin:$PATH"' >> /etc/skel/.bashrc && \
+  chmod o+w -R /usr/local # Allow write for npm installs -g
 
 ENV JENKINS_SWARM_VERSION 1.22
 ENV HOME /home/jenkins-slave
 
-RUN useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave
-RUN curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
-  && chmod 755 /usr/share/jenkins
+RUN \
+  useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave && \
+  curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
+    http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar && \
+  chmod 755 /usr/share/jenkins
+
+USER jenkins-slave
 
 COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
 COPY bowerrc /home/jenkins-slave/.bowerrc
-
-USER jenkins-slave
 
 VOLUME /home/jenkins-slave
 
