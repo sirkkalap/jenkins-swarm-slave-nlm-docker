@@ -35,17 +35,9 @@ RUN curl -L -s https://raw.githubusercontent.com/technomancy/leiningen/stable/bi
 # Node
 # Install Node.js, Bower, Grunt, Gulp
 RUN \
-  cd /tmp && \
-  wget http://nodejs.org/dist/node-latest.tar.gz && \
-  tar xvzf node-latest.tar.gz && \
-  rm -f node-latest.tar.gz && \
-  cd node-v* && \
-  ./configure && \
-  CXX="g++ -Wno-unused-local-typedefs" make && \
-  CXX="g++ -Wno-unused-local-typedefs" make install && \
-  cd /tmp && \
-  rm -rf /tmp/node-v* && \
-  npm install -g npm@2.5.0 && \
+  curl -sL https://deb.nodesource.com/setup | bash - && \
+  apt-get -y install nodejs && \
+  npm install -g npm@2.5.1 && \
   npm install -g bower@1.3.12 && \
   npm install -g grunt-cli@0.1.13 && \
   npm install -g gulp@3.8.11 && \
