@@ -21,6 +21,7 @@ RUN \
     git \
     google-chrome-stable \
     maven \
+    rsync \
     sudo \
     x11vnc \
     Xvfb && \
