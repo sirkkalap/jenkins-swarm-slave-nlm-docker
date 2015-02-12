@@ -4,28 +4,18 @@ MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
 USER root
 
-# Add Firefox & Chromium repos
-RUN \
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
-  curl -sL http://packages.linuxmint.com/pool/main/l/linuxmint-keyring/linuxmint-keyring_2009.04.29_all.deb >linuxmint-keyring.deb && \
-  echo "deb http://packages.linuxmint.com debian import" > /etc/apt/sources.list.d/linuxmint.list && \
-  dpkg -i linuxmint-keyring.deb && \
-  rm linuxmint-keyring.deb
-
 RUN \
   apt-get update && \
   apt-get -y install \
     build-essential \
-    firefox \
+    iceweasel \
     git \
-    google-chrome-stable \
     maven \
     rsync \
     sudo \
     x11vnc \
     Xvfb && \
-  rm -rf /var/lib/apt/lists/* # 2015-02-07
+  rm -rf /var/lib/apt/lists/* # 2015-02-13
 
 # Leiningen
 ENV LEIN_ROOT 1
