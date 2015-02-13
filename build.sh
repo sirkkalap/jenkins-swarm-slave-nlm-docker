@@ -11,7 +11,7 @@ read -r -d '' SCRIPT <<- End
     PORT=2376 /usr/local/bin/wrapdocker &
     export DOCKER_HOST=tcp://127.0.0.1:2376
     cd $PROJECT
-    docker build -t sirkkalap/jenkins-swarm-slave-nlm:java7 .
+    docker build -t sirkkalap/jenkins-swarm-slave-nlm:latest .
 End
 
 # https://github.com/sirkkalap/jenkins-swarm-slave-nlm-docker
