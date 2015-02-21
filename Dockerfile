@@ -58,3 +58,21 @@ VOLUME /home/jenkins-slave
 WORKDIR /home/jenkins-slave
 
 ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
+ENV HOME /home/jenkins-slave
+
+RUN \
+  useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave && \
+  curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
+    http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar && \
+  chmod 755 /usr/share/jenkins
+
+USER jenkins-slave
+
+COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
+COPY bowerrc /home/jenkins-slave/.bowerrc
+
+VOLUME /home/jenkins-slave
+
+WORKDIR /home/jenkins-slave
+
+ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
