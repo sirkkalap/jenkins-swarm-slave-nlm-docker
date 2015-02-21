@@ -58,7 +58,7 @@ VOLUME /home/jenkins-slave
 WORKDIR /home/jenkins-slave
 
 ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
- HOME /home/jenkins-slave
+ENV HOME /home/jenkins-slave
 
 RUN \
   useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave && \
