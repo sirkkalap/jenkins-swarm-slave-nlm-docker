@@ -4,6 +4,9 @@ MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
 USER root
 
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN true
+
 RUN \
   apt-get update && \
   apt-get -y install \
@@ -16,6 +19,30 @@ RUN \
     x11vnc \
     Xvfb && \
   rm -rf /var/lib/apt/lists/* # 2015-02-13
+
+# From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
+#===============
+# Google Chrome
+#===============
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+  && apt-get update -qqy \
+  && apt-get -qqy install \
+    google-chrome-stable \
+  && rm /etc/apt/sources.list.d/google-chrome.list \
+  && rm -rf /var/lib/apt/lists/*
+
+#==================
+# Chrome webdriver
+#==================
+ENV CHROME_DRIVER_VERSION 2.14
+RUN wget --no-verbose -O /tmp/chromedriver_linux64.zip http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
+  && rm -rf /opt/selenium/chromedriver \
+  && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
+  && rm /tmp/chromedriver_linux64.zip \
+  && mv /opt/selenium/chromedriver /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
+  && chmod 755 /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
+  && ln -fs /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
 # Leiningen
 ENV LEIN_ROOT 1
