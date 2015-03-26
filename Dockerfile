@@ -1,4 +1,4 @@
-FROM java:latest
+FROM java:7
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
@@ -11,14 +11,18 @@ RUN \
   apt-get update && \
   apt-get -y install \
     build-essential \
-    iceweasel \
     git \
     maven \
     rsync \
     sudo \
     x11vnc \
     Xvfb && \
-  rm -rf /var/lib/apt/lists/* # 2015-02-13
+  mkdir -p /opt && cd /opt && \
+  wget 'http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/15.0/linux-x86_64/en-US/firefox-15.0.tar.bz2' && \
+  tar -jxvf firefox-15.0.tar.bz2 && \
+  ln -sf /opt/firefox/firefox /usr/bin/firefox && \
+  rm firefox*.tar.bz2 && \
+  rm -rf /var/lib/apt/lists/* # 2015-03-26
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
 #===============
