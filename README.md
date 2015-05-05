@@ -1,6 +1,8 @@
 jenkins-swarm-slave-nlm-docker
 ==============================
 
+Renamed to work around possible Docker Hub restriction on branch name. It seems that hyphen is not allowed or something...
+
 Jenkins Swarmer slave with nodejs, Leiningen, Maven, Xvfb and Firefox
 
 # Running
