@@ -62,7 +62,7 @@ RUN \
   npm install -g gulp@3.8.11 && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /root/.bashrc && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /etc/skel/.bashrc && \
-  chmod o+w -R /usr/local # Allow write for npm installs -g
+  chmod o+w -R /usr/local # Allow write for npm installs -g # 2015-05-18
 
 ENV JENKINS_SWARM_VERSION 1.22
 ENV HOME /home/jenkins-slave
