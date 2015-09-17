@@ -18,7 +18,7 @@ RUN \
     sudo \
     x11vnc \
     Xvfb && \
-  rm -rf /var/lib/apt/lists/* # 2015-02-13
+  rm -rf /var/lib/apt/lists/* # 2015-09-17
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
 #===============
