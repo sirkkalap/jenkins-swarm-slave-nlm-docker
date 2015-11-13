@@ -18,7 +18,8 @@ RUN \
     sudo \
     x11vnc \
     Xvfb && \
-  rm -rf /var/lib/apt/lists/* # 2015-09-17
+  update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
+  rm -rf /var/lib/apt/lists/* # 2015-11-13
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
 #===============
@@ -62,7 +63,7 @@ RUN \
   npm install -g gulp@3.8.11 && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /root/.bashrc && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /etc/skel/.bashrc && \
-  chmod o+w -R /usr/local # Allow write for npm installs -g # 2015-05-18
+  chmod o+w -R /usr/local # Allow write for npm installs -g # 2015-11-13
 
 ENV JENKINS_SWARM_VERSION 1.22
 ENV HOME /home/jenkins-slave
