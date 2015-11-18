@@ -55,7 +55,7 @@ RUN curl -L -s https://raw.githubusercontent.com/technomancy/leiningen/stable/bi
 # Node
 # Install Node.js, Bower, Grunt, Gulp
 RUN \
-  curl -sL https://deb.nodesource.com/setup | bash - && \
+  curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
   apt-get -y install nodejs && \
   npm install -g npm@2.5.1 && \
   npm install -g bower@1.3.12 && \
