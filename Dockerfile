@@ -23,7 +23,8 @@ RUN \
   ln -sf /opt/firefox/firefox /usr/bin/firefox && \
   ln -sf /usr/share/java/commons-lang.jar /usr/share/maven/lib/commons-lang.jar && \
   rm firefox*.tar.bz2 && \
-  rm -rf /var/lib/apt/lists/* # 2015-03-26
+  update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java && \
+  rm -rf /var/lib/apt/lists/* # 2016-01-07
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
 #===============
@@ -59,7 +60,7 @@ RUN curl -L -s https://raw.githubusercontent.com/technomancy/leiningen/stable/bi
 # Node
 # Install Node.js, Bower, Grunt, Gulp
 RUN \
-  curl -sL https://deb.nodesource.com/setup | bash - && \
+  curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
   apt-get -y install nodejs && \
   npm install -g npm@2.5.1 && \
   npm install -g bower@1.3.12 && \
@@ -67,7 +68,7 @@ RUN \
   npm install -g gulp@3.8.11 && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /root/.bashrc && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /etc/skel/.bashrc && \
-  chmod o+w -R /usr/local # Allow write for npm installs -g
+  chmod o+w -R /usr/local # Allow write for npm installs -g # 2016-01-07
 
 ENV JENKINS_SWARM_VERSION 1.22
 ENV HOME /home/jenkins-slave
