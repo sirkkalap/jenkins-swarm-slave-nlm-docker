@@ -1,4 +1,4 @@
-FROM java:latest
+FROM java:8
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
@@ -18,7 +18,8 @@ RUN \
     sudo \
     x11vnc \
     Xvfb && \
-  rm -rf /var/lib/apt/lists/* # 2015-02-13
+  update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
+  rm -rf /var/lib/apt/lists/* # 2015-11-13
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
 #===============
@@ -54,7 +55,7 @@ RUN curl -L -s https://raw.githubusercontent.com/technomancy/leiningen/stable/bi
 # Node
 # Install Node.js, Bower, Grunt, Gulp
 RUN \
-  curl -sL https://deb.nodesource.com/setup | bash - && \
+  curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
   apt-get -y install nodejs && \
   npm install -g npm@2.5.1 && \
   npm install -g bower@1.3.12 && \
@@ -62,7 +63,7 @@ RUN \
   npm install -g gulp@3.8.11 && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /root/.bashrc && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /etc/skel/.bashrc && \
-  chmod o+w -R /usr/local # Allow write for npm installs -g
+  chmod o+w -R /usr/local # Allow write for npm installs -g # 2015-11-13
 
 ENV JENKINS_SWARM_VERSION 1.22
 ENV HOME /home/jenkins-slave
@@ -74,6 +75,9 @@ RUN \
   curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
     http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar && \
   chmod 755 /usr/share/jenkins
+
+RUN \
+  ln -sf /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
 
 USER jenkins-slave
 
