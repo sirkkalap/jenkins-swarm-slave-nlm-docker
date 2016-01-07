@@ -80,6 +80,9 @@ RUN \
     http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar && \
   chmod 755 /usr/share/jenkins
 
+RUN \
+  ln -sf /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
+
 USER jenkins-slave
 
 COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
