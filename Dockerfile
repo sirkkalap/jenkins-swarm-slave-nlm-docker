@@ -1,4 +1,4 @@
-FROM java:8
+FROM java:latest
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
@@ -15,6 +15,7 @@ RUN \
     git \
     maven \
     rsync \
+    locales \
     sudo \
     x11vnc \
     Xvfb && \
@@ -75,6 +76,13 @@ RUN \
   curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
     http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar && \
   chmod 755 /usr/share/jenkins
+
+# Set the locale
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+USER jenkins-slave
 
 RUN \
   ln -sf /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
