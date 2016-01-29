@@ -14,6 +14,7 @@ RUN \
     git \
     maven \
     rsync \
+    locales \
     sudo \
     x11vnc \
     Xvfb && \
