@@ -8,10 +8,13 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
 RUN \
+  echo 'deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main' > /etc/apt/sources.list.d/ubuntuzilla.list && \
+  apt-key adv --recv-keys --keyserver keyserver.ubuntu.com C1289A29 && \
   apt-get update && \
+  apt remove iceweasel icedove && \
   apt-get -y install \
     build-essential \
-    iceweasel \
+    firefox \
     git \
     maven \
     rsync \
