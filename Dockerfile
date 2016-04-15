@@ -1,4 +1,4 @@
-FROM java:latest
+FROM java:7
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
