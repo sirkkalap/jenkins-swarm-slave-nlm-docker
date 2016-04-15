@@ -89,8 +89,10 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV JAVA_OPTS -Duser.country=US -Duser.language=en
 
+# Set the timezone
 RUN \
   ln -sf /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
+ENV TZ Europe/Helsinki
 
 USER jenkins-slave
 
