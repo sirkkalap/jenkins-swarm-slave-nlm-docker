@@ -1,4 +1,4 @@
-FROM java:7
+FROM java:8
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
@@ -24,7 +24,7 @@ RUN \
   ln -sf /opt/firefox/firefox /usr/bin/firefox && \
   ln -sf /usr/share/java/commons-lang.jar /usr/share/maven/lib/commons-lang.jar && \
   rm firefox*.tar.bz2 && \
-  update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java && \
+  update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
   rm -rf /var/lib/apt/lists/* # 2016-01-07
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
