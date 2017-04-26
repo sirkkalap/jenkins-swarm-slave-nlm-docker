@@ -1,4 +1,4 @@
-FROM java:latest
+FROM java:8
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
@@ -73,7 +73,7 @@ RUN \
   useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave && \
   usermod -a -G sudo jenkins-slave && \
   echo "jenkins-slave ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/jenkins-slave && \
-  curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
+  curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION.jar \
     https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION.jar && \
   chmod 755 /usr/share/jenkins
 
