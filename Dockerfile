@@ -7,20 +7,22 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
+COPY jessie-backports.list /etc/apt/sources.list.d/
+
 RUN \
   apt-get update && \
   apt-get -y install \
     build-essential \
     iceweasel \
     git \
-    maven \
     rsync \
     locales \
     sudo \
     x11vnc \
     Xvfb && \
   update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
-  rm -rf /var/lib/apt/lists/* # 2015-11-13
+  apt-get -y -t jessie-backports install maven && \
+  rm -rf /var/lib/apt/lists/*
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
 #===============
@@ -66,15 +68,15 @@ RUN \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /etc/skel/.bashrc && \
   chmod o+w -R /usr/local # Allow write for npm installs -g # 2015-11-13
 
-ENV JENKINS_SWARM_VERSION 3.4
+ENV JENKINS_SWARM_VERSION 2.2
 ENV HOME /home/jenkins-slave
 
 RUN \
   useradd -c "Jenkins Slave user" -d $HOME -m jenkins-slave && \
   usermod -a -G sudo jenkins-slave && \
   echo "jenkins-slave ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/jenkins-slave && \
-  curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION.jar \
-    https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION.jar && \
+  curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar \
+    https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar && \
   chmod 755 /usr/share/jenkins
 
 # Set the locale
