@@ -100,7 +100,11 @@ RUN \
   chmod 755 /usr/share/jenkins
 
 # Set the locale
-RUN locale-gen en_US.UTF-8
+RUN \
+  echo "LANG=en_US.UTF-8" > /etc/default/locale && \
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+  locale-gen
+
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
