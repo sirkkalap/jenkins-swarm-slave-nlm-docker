@@ -14,5 +14,5 @@ Jenkins Swarmer slave with nodejs, Leiningen, Maven, Xvfb and Firefox
 # Building
 
 ```bash
-    docker build -t sirkkalap/jenkins-swarm-nlm-docker .
+    docker build -t sirkkalap/jenkins-swarm-nlm-docker:latest .
 ```
