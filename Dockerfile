@@ -11,16 +11,38 @@ RUN \
   apt-get update && \
   apt-get -y install \
     build-essential \
-    iceweasel \
     git \
+    iceweasel \
+    locales \
+    lsb-release \
     maven \
     rsync \
-    locales \
+    software-properties-common \
     sudo \
     x11vnc \
     Xvfb && \
   update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java && \
-  rm -rf /var/lib/apt/lists/* # 2015-11-13
+  rm -rf /var/lib/apt/lists/*
+
+# From: https://docs.docker.com/engine/installation/linux/docker-ce/debian/#install-using-the-repository
+#==============
+# Docker
+#=============
+RUN \
+  apt-get update && \
+  apt-get install \
+    apt-transport-https && \
+  curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+  add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable" && \
+  apt-get update && \
+  apt-get -y install \
+    ca-certificates \
+    gnupg2 \
+    docker-ce=17.06.0~ce-0~debian && \
+  rm -rf /var/lib/apt/lists/*
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
 #===============
