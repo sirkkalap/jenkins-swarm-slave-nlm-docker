@@ -9,6 +9,8 @@ ENV DEBCONF_NONINTERACTIVE_SEEN true
 
 RUN \
   apt-get update && \
+  apt-get install \
+    apt-transport-https && \
   apt-get -y install \
     build-essential \
     iceweasel \
