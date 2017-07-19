@@ -84,9 +84,10 @@ RUN \
   npm install -g bower@1.3.12 && \
   npm install -g grunt-cli@0.1.13 && \
   npm install -g gulp@3.8.11 && \
+  npm install -g nightwatch@0.9.16 && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /root/.bashrc && \
   echo 'export PATH="node_modules/.bin:$PATH"' >> /etc/skel/.bashrc && \
-  chmod o+w -R /usr/local # Allow write for npm installs -g # 2015-11-13
+  chmod o+w -R /usr/local # Allow write for npm installs -g 
 
 ENV JENKINS_SWARM_VERSION 3.4
 ENV HOME /home/jenkins-slave
