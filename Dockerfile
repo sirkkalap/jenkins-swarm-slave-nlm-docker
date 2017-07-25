@@ -14,6 +14,7 @@ RUN \
   apt-get -y install \
     build-essential \
     iceweasel \
+    imagemagick \
     git \
     rsync \
     locales \
