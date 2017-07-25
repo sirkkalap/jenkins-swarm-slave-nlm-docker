@@ -11,6 +11,8 @@ RUN \
   apt-get update && \
   apt-get -y install \
     build-essential \
+    iceweasel \
+    imagemagick \
     git \
     iceweasel \
     locales \
