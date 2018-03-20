@@ -43,8 +43,7 @@ RUN \
   apt-get -y install \
     ca-certificates \
     gnupg2 \
-    docker-ce=17.06.0~ce-0~debian \
-    docker-compose && \
+    docker-ce=17.06.0~ce-0~debian && \
   rm -rf /var/lib/apt/lists/*
 
 # From: https://registry.hub.docker.com/u/selenium/node-base/dockerfile/
