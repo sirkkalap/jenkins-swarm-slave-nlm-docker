@@ -1,4 +1,4 @@
-FROM java:latest
+FROM openjdk:8-jdk-slim
 
 MAINTAINER Petri Sirkkala <sirpete@iki.fi>
 
